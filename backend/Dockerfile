@@ -1,20 +1,13 @@
-# Utilise l'image Node.js officielle
-FROM node:18
+FROM node:22-alpine
 
-# Crée le dossier de l'app
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copie le package.json et package-lock.json
-COPY package*.json ./
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev
 
-# Installe les dépendances
-RUN npm install
+COPY src ./src
 
-# Copie le reste du code
-COPY . .
+ENV NODE_ENV=production
+EXPOSE 4000
 
-# Expose le port (celui défini dans index.js)
-EXPOSE 3000
-
-# Démarre l'application
-CMD [ "npm", "start" ]
+CMD ["node", "src/server.js"]

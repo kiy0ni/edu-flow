@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: eduflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-eduflow}
+      POSTGRES_DB: eduflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eduflow -d eduflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgres://eduflow:${POSTGRES_PASSWORD:-eduflow}@db:5432/eduflow
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+      JWT_SECRET: ${JWT_SECRET:?definissez JWT_SECRET dans .env}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?definissez ENCRYPTION_KEY dans .env}
+      ALLOW_DEMO_ACCOUNTS: ${ALLOW_DEMO_ACCOUNTS:-true}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      AI_MODEL: ${AI_MODEL:-claude-opus-5}
+    ports:
+      - "4000:4000"
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  pgdata:

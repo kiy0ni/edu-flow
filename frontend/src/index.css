@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   Jetons de design
+   ---------------------------------------------------------------------
+   Le mode sombre est *choisi*, pas deduit : chaque valeur y est reprise
+   pas a pas, jamais inversee automatiquement.
+   Les valeurs sombres sont declarees deux fois - sous la requete media
+   (reglage systeme) et sous [data-theme] (bascule explicite) - pour que
+   le choix de l'utilisateur l'emporte dans les deux sens.
+   ===================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Plans */
+  --plan:            #f7f7f5;
+  --surface:         #ffffff;
+  --surface-2:       #fbfbfa;
+  --surface-hover:   #f2f2ef;
+
+  /* Encre */
+  --ink:             #14140f;
+  --ink-2:           #55554e;
+  --ink-muted:       #85857c;
+  --ink-inverse:     #ffffff;
+
+  /* Traits */
+  --trait:           #e6e6e0;
+  --trait-fort:      #d3d3ca;
+  --grille:          #ecece6;
+
+  /* Accent (= serie 1 des graphiques) */
+  --accent:          #2a78d6;
+  --accent-fort:     #1c5cab;
+  --accent-doux:     #e8f1fc;
+  --accent-ink:      #1c5cab;
+
+  /* Series de graphiques - palette a deux entrees validee (clair) */
+  --serie-1:         #2a78d6;  /* l'eleve  */
+  --serie-2:         #eb6834;  /* la classe */
+
+  /* Etats - palette de statut fixe, jamais thematisee */
+  --bon:             #0ca30c;
+  --attention:       #fab219;
+  --serieux:         #ec835a;
+  --critique:        #d03b3b;
+  --bon-doux:        #e6f6e6;
+  --attention-doux:  #fdf3dd;
+  --critique-doux:   #fbe9e9;
+
+  --ombre: 0 1px 2px rgb(20 20 15 / 0.04), 0 4px 12px rgb(20 20 15 / 0.05);
+  --ombre-survol: 0 2px 6px rgb(20 20 15 / 0.07), 0 10px 24px -6px rgb(20 20 15 / 0.12);
+  --ombre-forte: 0 2px 4px rgb(20 20 15 / 0.06), 0 12px 32px rgb(20 20 15 / 0.10);
+  --rayon: 0.875rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --plan:          #0e0e10;
+    --surface:       #17171a;
+    --surface-2:     #1d1d21;
+    --surface-hover: #232329;
+    --ink:           #f4f4f2;
+    --ink-2:         #b6b6b0;
+    --ink-muted:     #85857c;
+    --ink-inverse:   #14140f;
+    --trait:         #2a2a30;
+    --trait-fort:    #3a3a42;
+    --grille:        #232329;
+    --accent:        #3987e5;
+    --accent-fort:   #6da7ec;
+    --accent-doux:   #17263a;
+    --accent-ink:    #86b6ef;
+    --serie-1:       #3987e5;
+    --serie-2:       #d95926;
+    --bon-doux:      #132913;
+    --attention-doux:#2e2510;
+    --critique-doux: #2e1516;
+    --ombre: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 12px rgb(0 0 0 / 0.35);
+    --ombre-survol: 0 2px 6px rgb(0 0 0 / 0.5), 0 10px 24px -6px rgb(0 0 0 / 0.45);
+    --ombre-forte: 0 2px 4px rgb(0 0 0 / 0.5), 0 12px 32px rgb(0 0 0 / 0.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --plan:          #0e0e10;
+  --surface:       #17171a;
+  --surface-2:     #1d1d21;
+  --surface-hover: #232329;
+  --ink:           #f4f4f2;
+  --ink-2:         #b6b6b0;
+  --ink-muted:     #85857c;
+  --ink-inverse:   #14140f;
+  --trait:         #2a2a30;
+  --trait-fort:    #3a3a42;
+  --grille:        #232329;
+  --accent:        #3987e5;
+  --accent-fort:   #6da7ec;
+  --accent-doux:   #17263a;
+  --accent-ink:    #86b6ef;
+  --serie-1:       #3987e5;
+  --serie-2:       #d95926;
+  --bon-doux:      #132913;
+  --attention-doux:#2e2510;
+  --critique-doux: #2e1516;
+  --ombre: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 12px rgb(0 0 0 / 0.35);
+  --ombre-survol: 0 2px 6px rgb(0 0 0 / 0.5), 0 10px 24px -6px rgb(0 0 0 / 0.45);
+  --ombre-forte: 0 2px 4px rgb(0 0 0 / 0.5), 0 12px 32px rgb(0 0 0 / 0.45);
+}
+
+/* Exposition des jetons aux utilitaires Tailwind */
+@theme inline {
+  --color-plan: var(--plan);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-hover: var(--surface-hover);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-trait: var(--trait);
+  --color-trait-fort: var(--trait-fort);
+  --color-accent: var(--accent);
+  --color-accent-fort: var(--accent-fort);
+  --color-accent-doux: var(--accent-doux);
+  --color-accent-ink: var(--accent-ink);
+  --color-bon: var(--bon);
+  --color-attention: var(--attention);
+  --color-serieux: var(--serieux);
+  --color-critique: var(--critique);
+  --color-bon-doux: var(--bon-doux);
+  --color-attention-doux: var(--attention-doux);
+  --color-critique-doux: var(--critique-doux);
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --radius-card: 0.875rem;
+  --shadow-carte: var(--ombre);
+  --shadow-carte-survol: var(--ombre-survol);
+  --shadow-flottant: var(--ombre-forte);
+}
+
+* { border-color: var(--trait); }
+
+html, body, #root { height: 100%; }
+
+body {
+  background: var(--plan);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent-doux); color: var(--accent-ink); }
+
+/* Barres de defilement discretes */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--trait-fort);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); background-clip: content-box; }
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =====================================================================
+   Mouvement
+   ---------------------------------------------------------------------
+   Un jeu volontairement restreint : chaque animation sert à expliquer
+   d'où vient un élément ou ce qui vient de changer. Les durées restent
+   courtes (150–260 ms) pour rester au service de l'usage, jamais au
+   service de l'effet. Tout est neutralisé par prefers-reduced-motion.
+   ===================================================================== */
+
+:root {
+  --sortie: cubic-bezier(0.16, 1, 0.3, 1);
+  --entree: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes eduflow-apparition {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.apparition { animation: eduflow-apparition 0.26s var(--sortie) both; }
+
+/* Entrée d'un panneau ancré (menu, palette) : léger recul en profondeur. */
+@keyframes eduflow-surgissement {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.surgissement { animation: eduflow-surgissement 0.2s var(--sortie) both; }
+
+/* Voile de fond des fenêtres modales. */
+@keyframes eduflow-voile {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.voile { animation: eduflow-voile 0.18s var(--entree) both; }
+
+/* Glissement latéral : tiroir de navigation mobile. */
+@keyframes eduflow-tiroir {
+  from { transform: translateX(-100%); }
+  to { transform: none; }
+}
+.tiroir { animation: eduflow-tiroir 0.24s var(--sortie) both; }
+
+/*
+ * Entrée échelonnée d'une liste : chaque élément suit le précédent de
+ * 26 ms, plafonné pour qu'une longue liste n'attende pas indéfiniment.
+ */
+.echelonne > * {
+  animation: eduflow-apparition 0.28s var(--sortie) both;
+  animation-delay: calc(var(--rang, 0) * 26ms);
+}
+
+@keyframes eduflow-pulsation { 50% { opacity: 0.45; } }
+.pulsation { animation: eduflow-pulsation 1.4s ease-in-out infinite; }
+
+/* Chargement : un reflet qui balaie la surface, plus lisible qu'un clignotement. */
+@keyframes eduflow-reflet {
+  from { background-position: -180% 0; }
+  to { background-position: 180% 0; }
+}
+.squelette {
+  background-image: linear-gradient(
+    90deg,
+    var(--surface-hover) 0%,
+    color-mix(in srgb, var(--surface-hover) 45%, var(--surface)) 50%,
+    var(--surface-hover) 100%
+  );
+  background-size: 220% 100%;
+  animation: eduflow-reflet 1.5s ease-in-out infinite;
+}
+
+/* Barres de progression : la largeur s'anime, jamais la position. */
+.progression-animee { transition: width 0.5s var(--sortie); }
+
+/* Retour tactile discret sur les commandes. */
+.pressable { transition: transform 0.12s var(--entree), background-color 0.15s var(--entree); }
+.pressable:active { transform: scale(0.97); }
+
+/* Survol d'une carte cliquable : élévation, sans déplacement brusque. */
+.carte-survol {
+  transition: border-color 0.16s var(--entree), box-shadow 0.16s var(--entree), transform 0.16s var(--entree);
+}
+.carte-survol:hover {
+  border-color: var(--trait-fort);
+  box-shadow: var(--shadow-carte-survol);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .echelonne > * { animation-delay: 0ms !important; }
+  .carte-survol:hover, .pressable:active { transform: none; }
+}

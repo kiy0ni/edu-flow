@@ -1,24 +1,38 @@
 {
-    "name": "eduflow-api",
-    "version": "1.0.0",
-    "description": "API d'authentification pour EduFlow utilisant l'API École Directe",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js",
-      "dev": "nodemon index.js"
-    },
-    "dependencies": {
-      "axios": "^1.4.0",
-      "bcrypt": "^5.1.0",
-      "body-parser": "^1.20.2",
-      "cors": "^2.8.5",
-      "dotenv": "^16.3.1",
-      "express": "^4.18.2",
-      "jsonwebtoken": "^9.0.0",
-      "pg": "^8.11.1"
-    },
-    "devDependencies": {
-      "nodemon": "^3.0.1"
-    }
+  "name": "@eduflow/backend",
+  "version": "2.0.0",
+  "private": true,
+  "description": "API EduFlow - ENT scolaire nouvelle generation",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "seed": "node src/db/seed.js",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.122.0",
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1",
+    "pino": "^9.6.0",
+    "pino-http": "^10.4.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "pino-pretty": "^13.0.0"
   }
-  
+}
